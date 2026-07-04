@@ -14,13 +14,20 @@ threshold, update THRESHOLDS here too.
   G6  test_trade_rate           in [0.40, 1.00]
 """
 
+import math
+
 THRESHOLDS: dict[str, tuple] = {
-    "g1": ("test_actionable_accuracy", ">=", 0.525),
-    "g2": ("test_trade_win_rate",      ">=", 0.50),
-    "g3": ("test_alpha_vs_qqq",        ">=", 0.0005),
-    "g4": ("g4_drift",                 "<=", 0.05),
-    "g5": ("clean_cv",                 "<",  0.50),
-    "g6": ("test_trade_rate",          "range", (0.40, 1.00)),
+    "g1": ("test_actionable_accuracy",  ">=", 0.525),
+    "g2": ("test_trade_win_rate",       ">=", 0.50),
+    "g3": ("test_alpha_vs_qqq",         ">=", 0.0005),
+    "g4": ("g4_drift",                  "<=", 0.05),
+    # G5: authoritative metric is clean_cv (active seeds only, collapsed filtered),
+    # computed by evaluate_sweep.py and not present in the main leaderboard CSV.
+    # Using test_return_cv_by_config (raw, unfiltered) as fallback — raw CV is
+    # higher than clean_cv so this is conservative (harder to pass than the real gate).
+    # If evaluate_sweep.py output is available, prefer querying that directly.
+    "g5": ("test_return_cv_by_config",  "<",  0.50),
+    "g6": ("test_trade_rate",           "range", (0.40, 1.00)),
 }
 
 GATE_DESCRIPTIONS = {
@@ -53,7 +60,7 @@ def evaluate_gates(row: dict) -> dict[str, dict]:
     Evaluate all 6 gates for a single leaderboard row.
 
     Returns dict keyed g1-g6, each with:
-      pass      bool | None  (None = column missing from row)
+      pass      bool | None  (None = column missing or NaN from row)
       value     float | None
       threshold str | float
       description str
@@ -64,13 +71,18 @@ def evaluate_gates(row: dict) -> dict[str, dict]:
         value = row.get(col)
         description = GATE_DESCRIPTIONS[gate]
 
-        if value is None:
+        # Treat both None and NaN as missing — NaN must be checked explicitly
+        # because float('nan') is not None, and nan < 0.50 evaluates False in
+        # Python rather than raising, silently turning missing data into failures.
+        is_missing = value is None or (isinstance(value, float) and math.isnan(value))
+
+        if is_missing:
             results[gate] = {
                 "pass": None,
                 "value": None,
                 "threshold": str(thresh),
                 "description": description,
-                "note": f"Column '{col}' missing from row",
+                "note": f"Column '{col}' is null/NaN for this row",
             }
             continue
 

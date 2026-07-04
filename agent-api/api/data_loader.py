@@ -51,13 +51,16 @@ def load_leaderboard() -> pd.DataFrame:
     df.columns = [c.strip() for c in df.columns]
 
     # Compute G4 drift if not pre-computed by evaluate_sweep.py
+    # Use .assign() to avoid pandas CoW chained-assignment warning
     if "g4_drift" not in df.columns:
         if "val_acc" in df.columns and "test_acc" in df.columns:
-            df["g4_drift"] = (df["val_acc"] - df["test_acc"]).abs()
+            df = df.assign(g4_drift=(df["val_acc"] - df["test_acc"]).abs())
         elif "val_actionable_accuracy" in df.columns and "test_actionable_accuracy" in df.columns:
-            df["g4_drift"] = (
-                df["val_actionable_accuracy"] - df["test_actionable_accuracy"]
-            ).abs()
+            df = df.assign(
+                g4_drift=(
+                    df["val_actionable_accuracy"] - df["test_actionable_accuracy"]
+                ).abs()
+            )
 
     return df
 
