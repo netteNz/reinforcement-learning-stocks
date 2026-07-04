@@ -186,7 +186,7 @@ def gate_failures(
         result = gate_results[gate_name]
         enriched = {
             **safe_row(row),
-            f"{gate_name}_value": result["value"],
+            f"{gate_name}_value": (None if isinstance(result["value"], float) and not math.isfinite(result["value"]) else result["value"]),
             f"{gate_name}_threshold": result["threshold"],
         }
         if result["pass"] is False:
