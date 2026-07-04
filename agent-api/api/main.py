@@ -6,13 +6,17 @@ Endpoints:
   GET /runs/{ticker}                   — all runs for a ticker
   GET /runs/label/{run_label}          — rows for a specific run_label
   GET /gates/{gate_name}/failures      — cross-ticker gate failure report
+  GET /gates/{gate_name}/summary       — per-ticker pass rate for a gate
   GET /ensemble/config                 — current ensemble_config.json
+  GET /ensemble/config/{ticker}        — ensemble config for one ticker
   POST /cache/invalidate               — reload leaderboard + config from disk
 
 Run from agent-api/ directory:
-  uvicorn main:app --reload --port 8001
+  API_BASE_URL=https://<ngrok>.ngrok-free.app uvicorn main:app --reload --port 8001
 """
 
+import os
+import math
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -27,10 +31,17 @@ from data_loader import (
 )
 from gates import evaluate_gates, gates_summary, GATE_DESCRIPTIONS
 
+# Inject server URL so Foundry's OpenAPI tool knows where to call at runtime.
+# Set API_BASE_URL env var to your ngrok/production URL before starting uvicorn.
+_servers = None
+if base_url := os.environ.get("API_BASE_URL"):
+    _servers = [{"url": base_url, "description": "Active server"}]
+
 app = FastAPI(
     title="quant-experiment-agent API",
     description="Structured lookup layer for the Binary PPO trading experiment history.",
     version="1.0.0",
+    servers=_servers,
 )
 
 app.add_middleware(
@@ -144,10 +155,10 @@ def gate_failures(
     run_label: str | None = Query(default=None, description="Scope to one run_label"),
 ):
     """
-    Cross-ticker gate failure report for gate_name (g1–g6).
+    Cross-ticker gate failure report for gate_name (g1-g6).
     Optional ?ticker= and ?run_label= filters.
-    Returns only rows that explicitly failed the gate (pass=False).
-    Rows with missing gate data are listed separately under missing_data.
+    Returns rows that explicitly failed the gate (pass=False).
+    Rows with missing gate data listed separately under missing_data.
     """
     gate_name = gate_name.lower()
     if gate_name not in GATE_DESCRIPTIONS:
@@ -215,7 +226,7 @@ def gate_summary_by_ticker(gate_name: str):
         passed = failed = missing = 0
         for row in group.to_dict("records"):
             result = evaluate_gates(row)[gate_name]
-            if result["pass"] is True:   passed  += 1
+            if result["pass"] is True:    passed  += 1
             elif result["pass"] is False: failed  += 1
             else:                         missing += 1
         total = passed + failed
