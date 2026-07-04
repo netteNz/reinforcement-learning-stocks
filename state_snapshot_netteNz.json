@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T20:25:55.743864+00:00",
+  "generated_at": "2026-07-04T20:45:50.296006+00:00",
   "machine": "netteNz",
   "repo_root": "D:\\code\\agentic-development\\reinforcement-learning-stocks",
   "staging": {
@@ -24,36 +24,72 @@
       ],
       "AMD": [
         {
-          "seed": "10",
-          "file": "amd_seed10.zip",
-          "size_bytes": 3278772
+          "seed": "21",
+          "file": "amd_seed21.zip",
+          "size_bytes": 175066
+        }
+      ],
+      "AMZN": [
+        {
+          "seed": "13",
+          "file": "amzn_seed13.zip",
+          "size_bytes": 162668
         },
         {
-          "seed": "2",
-          "file": "amd_seed2.zip",
-          "size_bytes": 3278771
+          "seed": "42",
+          "file": "amzn_seed42.zip",
+          "size_bytes": 162672
         },
         {
-          "seed": "5",
-          "file": "amd_seed5.zip",
-          "size_bytes": 3278775
+          "seed": "7",
+          "file": "amzn_seed7.zip",
+          "size_bytes": 162671
+        }
+      ],
+      "GOOGL": [
+        {
+          "seed": "13",
+          "file": "googl_seed13.zip",
+          "size_bytes": 161053
+        }
+      ],
+      "MU": [
+        {
+          "seed": "3",
+          "file": "mu_seed3.zip",
+          "size_bytes": 162161
+        },
+        {
+          "seed": "42",
+          "file": "mu_seed42.zip",
+          "size_bytes": 162162
+        },
+        {
+          "seed": "7",
+          "file": "mu_seed7.zip",
+          "size_bytes": 162161
         }
       ],
       "NVDA": [
         {
-          "seed": "4",
-          "file": "nvda_seed4.zip",
-          "size_bytes": 3278775
+          "seed": "13",
+          "file": "nvda_seed13.zip",
+          "size_bytes": 161282
         },
         {
-          "seed": "6",
-          "file": "nvda_seed6.zip",
-          "size_bytes": 3278771
+          "seed": "3",
+          "file": "nvda_seed3.zip",
+          "size_bytes": 161281
         },
         {
-          "seed": "8",
-          "file": "nvda_seed8.zip",
-          "size_bytes": 3278771
+          "seed": "42",
+          "file": "nvda_seed42.zip",
+          "size_bytes": 161282
+        },
+        {
+          "seed": "7",
+          "file": "nvda_seed7.zip",
+          "size_bytes": 161281
         }
       ]
     },
@@ -5366,61 +5402,5 @@
       "model_20260429-232727Z_fork_b_option2_seed99.zip"
     ]
   },
-  "active_seed_mismatches": [
-    {
-      "ticker": "NVDA",
-      "config_active_seeds": [
-        "3",
-        "7",
-        "13",
-        "42"
-      ],
-      "staged_seeds": [
-        "4",
-        "6",
-        "8"
-      ],
-      "overlap": []
-    },
-    {
-      "ticker": "AMD",
-      "config_active_seeds": [
-        "21"
-      ],
-      "staged_seeds": [
-        "2",
-        "5",
-        "10"
-      ],
-      "overlap": []
-    },
-    {
-      "ticker": "MU",
-      "config_active_seeds": [
-        "3",
-        "7",
-        "42"
-      ],
-      "staged_seeds": [],
-      "overlap": []
-    },
-    {
-      "ticker": "AMZN",
-      "config_active_seeds": [
-        "7",
-        "13",
-        "42"
-      ],
-      "staged_seeds": [],
-      "overlap": []
-    },
-    {
-      "ticker": "GOOGL",
-      "config_active_seeds": [
-        "13"
-      ],
-      "staged_seeds": [],
-      "overlap": []
-    }
-  ]
+  "active_seed_mismatches": []
 }
