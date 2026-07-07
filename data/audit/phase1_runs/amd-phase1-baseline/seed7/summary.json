@@ -1,0 +1,18 @@
+{
+  "ticker": "AMD",
+  "seed": 7,
+  "entropy": {
+    "mean": 0.6925426422457992,
+    "std": 0.0003869796256440412,
+    "min": 0.6918379068374634,
+    "max": 0.6931471824645996
+  },
+  "action_distribution": {
+    "action_0_flat": 0.002442002442002442,
+    "action_1_long": 0.9975579975579976
+  },
+  "mean_action_prob": 0.48454611605631415,
+  "value_estimate_mean": 1.6831240095454012,
+  "in_cooldown_ratio": 0.0,
+  "forced_action_ratio": 0.0
+}

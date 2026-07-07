@@ -1,0 +1,18 @@
+{
+  "ticker": "MU",
+  "seed": 3,
+  "entropy": {
+    "mean": 0.6686729718186188,
+    "std": 0.022818825299858823,
+    "min": 0.6159677505493164,
+    "max": 0.6931471824645996
+  },
+  "action_distribution": {
+    "action_0_flat": 0.3064713064713065,
+    "action_1_long": 0.6935286935286935
+  },
+  "mean_action_prob": 0.5381446271152287,
+  "value_estimate_mean": -0.3521980939794591,
+  "in_cooldown_ratio": 0.0,
+  "forced_action_ratio": 0.0
+}

@@ -762,8 +762,24 @@ def run_experiments(args: argparse.Namespace) -> pd.DataFrame:
             )
         
         callback = ProgressCallback(total_timesteps=timesteps)
-        
-        model.learn(total_timesteps=timesteps, callback=callback)
+
+        telemetry_cb = None
+        if args.phase1_telemetry:
+            from src.phase1_telemetry import Phase1TelemetryCallback
+            run_label_slug = _safe_label(args.run_label) if args.run_label else "run"
+            telemetry_cb = Phase1TelemetryCallback(
+                log_dir=f"data/audit/phase1_runs/{run_label_slug}",
+                ticker=canonical_ticker,
+                seed=seed,
+            )
+
+        model.learn(
+            total_timesteps=timesteps,
+            callback=[callback, telemetry_cb] if telemetry_cb else callback,
+        )
+
+        if telemetry_cb is not None:
+            telemetry_cb.finalize_run()
         if torch.cuda.is_available():
             print(f"GPU memory allocated: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
             print(f"GPU memory reserved: {torch.cuda.memory_reserved() / 1e9:.2f} GB")
@@ -982,6 +998,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--disable-snapshots", action="store_true", help="Disable timestamped snapshot output files.")
     parser.add_argument("--append", action="store_true", help="Append results to existing leaderboard.")
     parser.add_argument("--run-label", default="", help="Optional suffix label appended to snapshot filenames.")
+    parser.add_argument(
+        "--phase1-telemetry",
+        action="store_true",
+        help="Capture Phase 1 telemetry (actor logits, entropy, value estimates, forced-hold "
+             "hits) to data/audit/phase1_runs/{run_label}/seed{seed}/. See REFINEMENT_TODO.md Phase 1.",
+    )
     parser.add_argument(
         "--compact-output",
         action="store_true",

@@ -1,0 +1,18 @@
+{
+  "ticker": "NVDA",
+  "seed": 13,
+  "entropy": {
+    "mean": 0.686820127442934,
+    "std": 0.007195612608860274,
+    "min": 0.6620066165924072,
+    "max": 0.6931471824645996
+  },
+  "action_distribution": {
+    "action_0_flat": 0.4725274725274725,
+    "action_1_long": 0.5274725274725275
+  },
+  "mean_action_prob": 0.5017987060313988,
+  "value_estimate_mean": 1.6379177321967588,
+  "in_cooldown_ratio": 0.0,
+  "forced_action_ratio": 0.0
+}

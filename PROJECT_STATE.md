@@ -4,6 +4,43 @@
 
 ---
 
+## ADDENDUM — 2026-07-06 Correction (supersedes AMD/MU promotion claims below)
+
+The AMD and MU "Promoted ✅" status throughout this document (including the
+`amd-masked-ppo-v1-low-friction` and `mu-masked-ppo-v1-tuned` champions) is
+**no longer accurate**. Both have been un-promoted in
+`staging/models/ensemble_config.json` (`production_ready: false`).
+
+**Root cause:** `scripts/diagnose_amd.py` (run 2026-07-06) confirmed the
+promoted AMD checkpoint (`amd-masked-ppo-v1-low-friction`, seed 13) never
+takes a long position across an entire deterministic validation pass — the
+policy's action-probability distribution sits at a persistent ~58% cash /
+42% long split on every bar, and since backtest evaluation is correctly
+deterministic (argmax), it resolves to cash every time. This matches
+`test_trade_rate = 0.0` across all promoted rows in
+`data/experiment_leaderboard_history.csv` for both AMD and MU. This is a
+genuine training failure (policy converged to a near-tie on the wrong side of
+50%), not an observation-space or masking bug — ruled out by direct
+reproduction with the actual saved model + env.
+
+The low-friction remediation described later in this document (the sweep
+command at line ~172, run label `amd-masked-ppo-v1-low-friction`) was the
+attempted fix for an *earlier* AMD collapse — but that remediation run itself
+also collapsed to 0% trade rate. That failure was never recorded back into
+this document, which is how AMD ended up re-promoted on a Sharpe number
+pulled from a run that made zero trades.
+
+**Current live status:** always check `/ensemble/config/{ticker}` via the
+agent-api rather than the tables below — this document is not being kept in
+sync with promotion status changes in real time.
+
+**Next step:** AMD and MU need a fresh training run with Phase 1 telemetry
+(`--phase1-telemetry`, see `docs/PHASE1_INTEGRATION_GUIDE.md`) to confirm
+whether retraining breaks the near-50/50 deadlock, before either is
+re-promoted.
+
+---
+
 ## 1. Executive Summary
 
 The **Binary PPO + Min-Hold Constraints** architecture has successfully promoted **3 tickers**: NVDA, AMD, and MU.

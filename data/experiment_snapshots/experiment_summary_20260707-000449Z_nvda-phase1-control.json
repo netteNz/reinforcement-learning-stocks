@@ -1,10 +1,10 @@
 {
   "rows": 8,
   "generated_at_utc": "20260707-000449Z",
-  "leaderboard_path": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_leaderboard.csv",
-  "reward_leaderboard_path": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_reward_leaderboard.csv",
-  "leaderboard_history_path": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_leaderboard_history.csv",
-  "reward_leaderboard_history_path": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_reward_leaderboard_history.csv",
+  "leaderboard_path": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_snapshots\\experiment_leaderboard_20260707-000449Z_nvda-phase1-control.csv",
+  "reward_leaderboard_path": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_snapshots\\experiment_reward_leaderboard_20260707-000449Z_nvda-phase1-control.csv",
+  "leaderboard_history_path": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_snapshots\\experiment_leaderboard_history_20260707-000449Z_nvda-phase1-control.csv",
+  "reward_leaderboard_history_path": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_snapshots\\experiment_reward_leaderboard_history_20260707-000449Z_nvda-phase1-control.csv",
   "leaderboard_version": 2,
   "top3": [
     {
@@ -304,12 +304,5 @@
       "high_return_cv_risk": 1,
       "robustness_score": -0.0629710612272705
     }
-  ],
-  "snapshot_paths": {
-    "leaderboard": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_snapshots\\experiment_leaderboard_20260707-000449Z_nvda-phase1-control.csv",
-    "reward_leaderboard": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_snapshots\\experiment_reward_leaderboard_20260707-000449Z_nvda-phase1-control.csv",
-    "leaderboard_history": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_snapshots\\experiment_leaderboard_history_20260707-000449Z_nvda-phase1-control.csv",
-    "reward_leaderboard_history": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_snapshots\\experiment_reward_leaderboard_history_20260707-000449Z_nvda-phase1-control.csv",
-    "summary": "D:\\code\\agentic-development\\reinforcement-learning-stocks\\data\\experiment_snapshots\\experiment_summary_20260707-000449Z_nvda-phase1-control.json"
-  }
+  ]
 }

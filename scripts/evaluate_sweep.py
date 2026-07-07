@@ -266,9 +266,9 @@ def main():
         for g in GATES
     }
 
-    print(f"\n{'─'*70}")
+    print(f"\n{'-'*70}")
     print(f"  GATE PASS RATES")
-    print(f"{'─'*70}")
+    print(f"{'-'*70}")
     for name, rate in gate_pass_rates.items():
         bar   = "█" * int(rate * 20)
         empty = "░" * (20 - int(rate * 20))
@@ -278,9 +278,9 @@ def main():
 
     # ---- Overtrade summary --------------------------------------------------
     if tr_col:
-        print(f"\n{'─'*70}")
+        print(f"\n{'-'*70}")
         print(f"  TRADE RATE DISTRIBUTION  (target: {TRADE_RATE_TARGET_LOW:.0%}–{TRADE_RATE_TARGET_HIGH:.0%})")
-        print(f"{'─'*70}")
+        print(f"{'-'*70}")
         bands = {
             f"Overtrade   (> {TRADE_RATE_TARGET_HIGH:.0%})": df[tr_col] > TRADE_RATE_TARGET_HIGH,
             f"Target zone ({TRADE_RATE_TARGET_LOW:.0%}–{TRADE_RATE_TARGET_HIGH:.0%})": (df[tr_col] >= TRADE_RATE_TARGET_LOW) & (df[tr_col] <= TRADE_RATE_TARGET_HIGH),
@@ -301,9 +301,9 @@ def main():
 
     ranked = df.sort_values(sort_cols, ascending=sort_asc).head(args.top)
 
-    print(f"\n{'─'*70}")
+    print(f"\n{'-'*70}")
     print(f"  TOP {args.top} CONFIGS  (sorted: 5/5 gates first, then Sharpe)")
-    print(f"{'─'*70}")
+    print(f"{'-'*70}")
 
     # Build display columns dynamically from what exists
     display_always = ["run_label", "ticker", "seed"]
@@ -324,9 +324,9 @@ def main():
     print(ranked[show_cols].to_string(index=False))
 
     # ---- Gate detail for top 3 ----------------------------------------------
-    print(f"\n{'─'*70}")
+    print(f"\n{'-'*70}")
     print(f"  GATE BREAKDOWN — TOP 3")
-    print(f"{'─'*70}")
+    print(f"{'-'*70}")
     for _, row in ranked.head(3).iterrows():
         label_col = _find_col(ranked.columns, ["run_label", "label"])
         row_label = row[label_col] if label_col else "?"
@@ -398,9 +398,9 @@ def main():
         print(f"  Trade rate: {_trade_rate_symbol(tr_val)}")
 
     # ---- Next steps ---------------------------------------------------------
-    print(f"\n{'─'*70}")
+    print(f"\n{'-'*70}")
     print("  NEXT STEPS")
-    print(f"{'─'*70}")
+    print(f"{'-'*70}")
     print(f"\n  1. Lock baseline snapshot before any further changes:")
     print(f"       python scripts/sanity_scan.py --leaderboard {lb_path}")
     print(f"\n  2. Regenerate ensemble config with champion:")
@@ -418,9 +418,9 @@ def main():
 
     # ---- Auto-promote -------------------------------------------------------
     if args.promote:
-        print(f"{'─'*70}")
+        print(f"{'-'*70}")
         print("  --promote flag set. Running generate_ensemble_config.py ...")
-        print(f"{'─'*70}")
+        print(f"{'-'*70}")
         cmd = [
             sys.executable, "scripts/generate_ensemble_config.py",
             "--leaderboard", str(lb_path),
