@@ -1,7 +1,23 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -v -E '\\\\.zip$|\\\\.pkl$'hgnbvfcdghp['])"
+      "Bash(grep -v -E '\\\\.zip$|\\\\.pkl$'hgnbvfcdghp['])",
+      "Bash(py -m venv .venv)"
     ]
+  },
+  "skillOverrides": {
+    "algorithmic-art": "off",
+    "backtest-auditor": "off",
+    "environment-realism-auditor": "off",
+    "indicator-combo-builder": "off",
+    "magic-animator": "off",
+    "magic-ui-generator": "off",
+    "python-venv-init": "off",
+    "quant-experiment-strategist": "off",
+    "reward-architect": "off",
+    "signal-dashboard-troubleshooter": "off",
+    "strategy-refinement-analyst": "off",
+    "ui-ux-signal-analytics": "off",
+    "tailored-resume-generator": "off"
   }
 }
